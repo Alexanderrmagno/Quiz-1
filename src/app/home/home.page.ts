@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-
 interface Event {
  id: number;
  eventName: string;
@@ -13,7 +12,6 @@ interface Event {
  organizerPhone: string;
 }
 
-
 @Component({
  selector: 'app-home',
  templateUrl: 'home.page.html',
@@ -21,6 +19,7 @@ interface Event {
  standalone: true,
  imports: [IonicModule, CommonModule, FormsModule]
 })
+
 export class HomePage {
  eventName: string = '';
  startDate: string = '';
@@ -31,7 +30,6 @@ export class HomePage {
  today: string = new Date().toISOString();
   showError: boolean = false;
  errorMessage: string = '';
-
 
  addEvent() {
    if (this.validateForm()) {
@@ -44,12 +42,10 @@ export class HomePage {
        organizerPhone: this.organizerPhone
      };
 
-
      this.events.push(newEvent);
      this.resetForm();
    }
  }
-
 
  validateForm(): boolean {
    if (!this.eventName || !this.startDate || !this.endDate ||
@@ -58,7 +54,7 @@ export class HomePage {
      this.errorMessage = 'Por favor, complete todos los campos.';
      return false;
    }
-  
+
    this.showError = false;
    this.errorMessage = '';
    return true;
@@ -69,7 +65,6 @@ export class HomePage {
    this.events = this.events.filter(e => e.id !== event.id);
  }
 
-
  resetForm() {
    this.eventName = '';
    this.startDate = '';
@@ -78,11 +73,9 @@ export class HomePage {
    this.organizerPhone = '';
  }
 
-
  onStartDateChange(event: any) {
    this.startDate = event.detail.value;
  }
-
 
  onEndDateChange(event: any) {
    this.endDate = event.detail.value;

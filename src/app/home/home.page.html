@@ -61,11 +61,9 @@
       </ion-input>
     </ion-item>
  
- 
     <div *ngIf="showError" class="mensaje-error">
       {{ errorMessage }}
     </div>
- 
  
     <ion-button
       expand="block"
@@ -75,7 +73,6 @@
       | Confirmar Evento |
     </ion-button>
   </form>
- 
  
   <div class="lista-tareas" *ngIf="events.length > 0">
     <ion-list>
@@ -91,7 +88,6 @@
       </ion-item>
     </ion-list>
   </div>
- 
  
   <div *ngIf="events.length === 0" class="ion-padding" style="text-align: center;">
     <p>No hay eventos próximos</p>
