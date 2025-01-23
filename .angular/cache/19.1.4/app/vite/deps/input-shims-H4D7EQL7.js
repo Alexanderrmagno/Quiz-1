@@ -7,10 +7,6 @@ import {
   getScrollElement,
   scrollByPoint
 } from "./chunk-SWBNJOIY.js";
-import {
-  doc,
-  win
-} from "./chunk-ACUVEYEP.js";
 import "./chunk-VEV5BJ2D.js";
 import {
   addEventListener,
@@ -18,6 +14,10 @@ import {
   raf,
   removeEventListener
 } from "./chunk-OKPK4C3D.js";
+import {
+  doc,
+  win
+} from "./chunk-ACUVEYEP.js";
 import {
   __async
 } from "./chunk-QHQP2P2Z.js";
@@ -358,4 +358,4 @@ export {
    * (C) Ionic http://ionicframework.com - MIT License
    *)
 */
-//# sourceMappingURL=input-shims-VWRERZLC.js.map
+//# sourceMappingURL=input-shims-H4D7EQL7.js.map

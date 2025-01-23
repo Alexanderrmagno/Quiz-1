@@ -1,20 +1,80 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="titulo">
+      Quiz 1 | DAMM
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="mi-tarjeta">
+    <form (ngSubmit)="addTask()" #taskForm="ngForm" class="formulario">
+      <ion-item>
+        <ion-label>Nombre del Evento:</ion-label>
+        <ion-input
+          [(ngModel)]="newTask"
+          name="taskText"
+          required
+          type="text">
+        </ion-input>
+      </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+
+      <ion-item>
+        <ion-label>Fecha de inicio:</ion-label>
+        <ion-datetime
+          [(ngModel)]="dueDate"
+          name="dueDate"
+          [min]="today"
+          (ionChange)="onDateChange($event)"
+          [showDefaultButtons]="true">
+        </ion-datetime>
+      </ion-item>
+
+      <div *ngIf="showError" class="mensaje-error">
+        {{ errorMessage }}
+      </div>
+
+      <ion-item>
+        <ion-label>Fecha de termino:</ion-label>
+        <ion-datetime
+          [(ngModel)]="dueDate"
+          name="dueDate"
+          [min]="today"
+          (ionChange)="onDateChange($event)"
+          [showDefaultButtons]="true">
+        </ion-datetime>
+      </ion-item>
+
+      <div *ngIf="showError" class="mensaje-error">
+        {{ errorMessage }}
+      </div>
+
+      <button class="boton-agregar" type="submit">
+        | Confirmar Evento |
+      </button>
+    </form>
+  </div>
+
+  <div class="lista-tareas">
+    <div *ngFor="let task of tasks" 
+         class="tarea"
+         [class.completada]="task.completed">
+      <ion-checkbox
+        [(ngModel)]="task.completed"
+        (ionChange)="toggleTask(task)">
+      </ion-checkbox>
+      <span>{{ task.text }}</span>
+      <div class="fecha">
+        Fecha: {{ task.dueDate | date:'dd/MM/yyyy' }}
+      </div>
+      <ion-button color="danger" (click)="deleteTask(task)">
+        Borrar
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="tasks.length === 0" style="text-align: center; margin-top: 20px;">
+    <p>No hay tareas todavía</p>
   </div>
 </ion-content>
