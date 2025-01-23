@@ -1,90 +1,63 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { HomePage } from './home.page';
 
+describe('HomePage', () => {
+  let component: HomePage;
+  let fixture: ComponentFixture<HomePage>;
 
-interface Event {
- id: number;
- eventName: string;
- startDate: string;
- endDate: string;
- organizerName: string;
- organizerPhone: string;
-}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [HomePage],
+      imports: [IonicModule]
+    }).compileComponents();
 
+    fixture = TestBed.createComponent(HomePage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-@Component({
- selector: 'app-home',
- templateUrl: 'home.page.html',
- styleUrls: ['home.page.scss'],
- standalone: true,
- imports: [IonicModule, CommonModule, FormsModule]
-})
-export class HomePage {
- eventName: string = '';
- startDate: string = '';
- endDate: string = '';
- organizerName: string = '';
- organizerPhone: string = '';
-  events: Event[] = [];
- today: string = new Date().toISOString();
-  showError: boolean = false;
- errorMessage: string = '';
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
+  it('should validate form correctly', () => {
+    component.eventName = 'Test Event';
+    component.startDate = new Date().toISOString();
+    component.endDate = new Date().toISOString();
+    component.organizerName = 'Test Organizer';
+    component.organizerPhone = '1234567890';
 
- addEvent() {
-   if (this.validateForm()) {
-     const newEvent: Event = {
-       id: Date.now(),
-       eventName: this.eventName,
-       startDate: this.startDate,
-       endDate: this.endDate,
-       organizerName: this.organizerName,
-       organizerPhone: this.organizerPhone
-     };
+    expect(component.validateForm()).toBeTruthy();
+  });
 
+  it('should not validate form with missing fields', () => {
+    component.eventName = '';
+    component.startDate = '';
 
-     this.events.push(newEvent);
-     this.resetForm();
-   }
- }
+    expect(component.validateForm()).toBeFalsy();
+    expect(component.showError).toBeTruthy();
+  });
 
+  it('should add event correctly', () => {
+    component.eventName = 'Test Event';
+    component.startDate = new Date().toISOString();
+    component.endDate = new Date().toISOString();
+    component.organizerName = 'Test Organizer';
+    component.organizerPhone = '1234567890';
 
- validateForm(): boolean {
-   if (!this.eventName || !this.startDate || !this.endDate ||
-       !this.organizerName || !this.organizerPhone) {
-     this.showError = true;
-     this.errorMessage = 'Por favor, complete todos los campos.';
-     return false;
-   }
-  
-   this.showError = false;
-   this.errorMessage = '';
-   return true;
- }
+    component.addEvent();
 
+    expect(component.events.length).toBe(1);
+    expect(component.events[0].eventName).toBe('Test Event');
+  });
 
- deleteEvent(event: Event) {
-   this.events = this.events.filter(e => e.id !== event.id);
- }
+  it('should delete event correctly', () => {
+    component.addEvent();
+    const eventToDelete = component.events[0];
+    
+    component.deleteEvent(eventToDelete);
 
-
- resetForm() {
-   this.eventName = '';
-   this.startDate = '';
-   this.endDate = '';
-   this.organizerName = '';
-   this.organizerPhone = '';
- }
-
-
- onStartDateChange(event: any) {
-   this.startDate = event.detail.value;
- }
-
-
- onEndDateChange(event: any) {
-   this.endDate = event.detail.value;
- }
-}
+    expect(component.events.length).toBe(0);
+  });
+});

@@ -3,83 +3,88 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-interface Task {
-  id: number;
-  text: string;
-  completed: boolean;
-  dueDate: string;
+
+interface Event {
+ id: number;
+ eventName: string;
+ startDate: string;
+ endDate: string;
+ organizerName: string;
+ organizerPhone: string;
 }
 
+
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+ selector: 'app-home',
+ templateUrl: 'home.page.html',
+ styleUrls: ['home.page.scss'],
+ standalone: true,
+ imports: [IonicModule, CommonModule, FormsModule]
 })
 export class HomePage {
-  tasks: Task[] = [];
-  newTask: string = '';
-  dueDate: string = '';
+ eventName: string = '';
+ startDate: string = '';
+ endDate: string = '';
+ organizerName: string = '';
+ organizerPhone: string = '';
+  events: Event[] = [];
+ today: string = new Date().toISOString();
   showError: boolean = false;
-  errorMessage: string = '';
-  today: string = new Date().toISOString();
+ errorMessage: string = '';
 
-  constructor() {}
 
-  validateTask(): boolean {
-    if (!this.newTask.trim()) {
-      this.errorMessage = 'El nombre de la tarea es requerido';
-      this.showError = true;
-      return false;
-    }
-    if (!this.dueDate) {
-      this.errorMessage = 'La fecha de entrega es requerida';
-      this.showError = true;
-      return false;
-    }
-    this.showError = false;
-    this.errorMessage = '';
-    return true;
-  }
+ addEvent() {
+   if (this.validateForm()) {
+     const newEvent: Event = {
+       id: Date.now(),
+       eventName: this.eventName,
+       startDate: this.startDate,
+       endDate: this.endDate,
+       organizerName: this.organizerName,
+       organizerPhone: this.organizerPhone
+     };
 
-  addTask() {
-    if (!this.validateTask()) return;
 
-    const task: Task = {
-      id: Date.now(),
-      text: this.newTask.trim(),
-      completed: false,
-      dueDate: this.dueDate
-    };
+     this.events.push(newEvent);
+     this.resetForm();
+   }
+ }
 
-    this.tasks.push(task);
-    this.resetForm();
-  }
 
-  resetForm() {
-    this.newTask = '';
-    this.dueDate = '';
-    this.showError = false;
-    this.errorMessage = '';
-  }
+ validateForm(): boolean {
+   if (!this.eventName || !this.startDate || !this.endDate ||
+       !this.organizerName || !this.organizerPhone) {
+     this.showError = true;
+     this.errorMessage = 'Por favor, complete todos los campos.';
+     return false;
+   }
+  
+   this.showError = false;
+   this.errorMessage = '';
+   return true;
+ }
 
-  toggleTask(task: Task) {
-    task.completed = !task.completed;
-  }
 
-  deleteTask(task: Task) {
-    this.tasks = this.tasks.filter(t => t.id !== task.id);
-  }
+ deleteEvent(event: Event) {
+   this.events = this.events.filter(e => e.id !== event.id);
+ }
 
-  getTaskStatus(task: Task): string {
-    if (task.completed) return 'completed';
-    const dueDate = new Date(task.dueDate);
-    const today = new Date();
-    return dueDate < today ? 'overdue' : '';
-  }
 
-  onDateChange(event: any) {
-    this.dueDate = event.detail.value;
-  }
+ resetForm() {
+   this.eventName = '';
+   this.startDate = '';
+   this.endDate = '';
+   this.organizerName = '';
+   this.organizerPhone = '';
+ }
+
+
+ onStartDateChange(event: any) {
+   this.startDate = event.detail.value;
+ }
+
+
+ onEndDateChange(event: any) {
+   this.endDate = event.detail.value;
+ }
 }
