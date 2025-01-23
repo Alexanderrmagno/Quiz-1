@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { IonCheckbox } from '@ionic/angular/standalone';  
+
+
 
 interface Event {
  id: number;

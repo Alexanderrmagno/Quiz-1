@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="titulo">
-      Quiz 1 | DAMM
+      |Quiz 1 | DAMM|
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -80,12 +80,13 @@
         <ion-label>
           <h2>{{ event.eventName }}</h2>
           <p>Organizador: {{ event.organizerName }}</p>
-          <p>Fecha: {{ event.startDate }} - {{ event.endDate }}</p>
+          <p>Empieza: {{ event.startDate }} | Termina: {{ event.endDate }}</p>
         </ion-label>
         <ion-button slot="end" color="danger" (click)="deleteEvent(event)">
           Borrar
         </ion-button>
       </ion-item>
+      <ion-checkbox>Marcar como completado</ion-checkbox>
     </ion-list>
   </div>
  
