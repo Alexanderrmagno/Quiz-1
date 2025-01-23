@@ -7,44 +7,38 @@
 </ion-header>
 
 <ion-content>
-  <div class="mi-tarjeta">
-    <form (ngSubmit)="addTask()" #taskForm="ngForm" class="formulario">
-      <ion-item>
-        <ion-label>Nombre del Evento:</ion-label>
-        <ion-input
-          [(ngModel)]="newTask"
-          name="taskText"
-          required
-          type="text">
-        </ion-input>
-      </ion-item>
+  <form (ngSubmit)="addEvent()" #eventForm="ngForm" class="formulario">
+    <ion-item>
+      <ion-label position="floating">Nombre del Evento:</ion-label>
+      <ion-input
+        [(ngModel)]="eventName"
+        name="eventName"
+        required
+        type="text">
+      </ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label position="floating">Fecha de inicio:</ion-label>
+      <ion-datetime
+        [(ngModel)]="startDate"
+        name="startDate"
+        [min]="today"
+        (ionChange)="onStartDateChange($event)"
+        [showDefaultButtons]="true">
+      </ion-datetime>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>Fecha de inicio:</ion-label>
-        <ion-datetime
-          [(ngModel)]="dueDate"
-          name="dueDate"
-          [min]="today"
-          (ionChange)="onDateChange($event)"
-          [showDefaultButtons]="true">
-        </ion-datetime>
-      </ion-item>
-
-      <div *ngIf="showError" class="mensaje-error">
-        {{ errorMessage }}
-      </div>
-
-      <ion-item>
-        <ion-label>Fecha de termino:</ion-label>
-        <ion-datetime
-          [(ngModel)]="dueDate"
-          name="dueDate"
-          [min]="today"
-          (ionChange)="onDateChange($event)"
-          [showDefaultButtons]="true">
-        </ion-datetime>
-      </ion-item>
+    <ion-item>
+      <ion-label position="floating">Fecha de termino:</ion-label>
+      <ion-datetime
+        [(ngModel)]="endDate"
+        name="endDate"
+        [min]="startDate"
+        (ionChange)="onEndDateChange($event)"
+        [showDefaultButtons]="true">
+      </ion-datetime>
+    </ion-item>
 
       <div *ngIf="showError" class="mensaje-error">
         {{ errorMessage }}
